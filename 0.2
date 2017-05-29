@@ -1,0 +1,185 @@
+import pygame
+import random
+
+# Define some colors
+BLACK    = (   0,   0,   0)
+WHITE    = ( 255, 255, 255)
+GREEN    = (   0, 255,   0)
+RED      = ( 255,   0,   0)
+
+pygame.init()
+
+# Set the width and height of the screen [width, height]
+size = (800, 500)
+screen = pygame.display.set_mode(size)
+
+pygame.display.set_caption("My Game")
+
+#Loop until the user clicks the close button.
+done = False
+
+# Used to manage how fast the screen updates
+clock = pygame.time.Clock()
+
+clouds = 0
+clouds_copy= 800
+
+big_mount = 0
+big_mount_copy = 800
+
+lil_mount = 0
+lil_mount_copy = 800
+
+bg_trees = 0
+bg_trees_copy = 800
+
+fg_trees   = 0
+fg_trees_copy = 800
+
+
+# ----- Loads a bunch of stuff ----- #
+
+# Intro Music
+intro = pygame.mixer.music.load("assets/title-theme.ogg")
+pygame.mixer.music.play(0, 0.0)
+
+# Title (Ripjaw Oddesy)
+title = pygame.image.load("assets/title.png").convert_alpha()
+title_resize = pygame.transform.scale(title, (500,70))
+
+# "Press any key to continue"
+anykey = pygame.image.load("assets/anykey.png").convert_alpha()
+anykey_resize = pygame.transform.scale(anykey, (400,70))
+
+# Sky
+bg_image0 = pygame.image.load("assets/bg0.png").convert()
+resize_bg0 = pygame.transform.scale(bg_image0, (800,500))
+
+# Moon
+bg_image1 = pygame.image.load("assets/bg1.png").convert_alpha()
+resize_bg1 = pygame.transform.scale(bg_image1, (800,500))
+
+# Clouds
+bg_image2 = pygame.image.load("assets/bg2.png").convert_alpha()
+resize_bg2 = pygame.transform.scale(bg_image2, (800,500))
+bg_copy2 = pygame.image.load("assets/bg2.png").convert_alpha()
+resize_copy2 = pygame.transform.scale(bg_copy2, (800,500))
+
+# Backround Mountian
+bg_image3 = pygame.image.load("assets/bg3.png").convert_alpha()
+resize_bg3 = pygame.transform.scale(bg_image3, (800,500))
+bg_copy3 = pygame.image.load("assets/bg3.png").convert_alpha()
+resize_copy3 = pygame.transform.scale(bg_copy3, (800,500))
+
+# Foreground Mountains
+bg_image4 = pygame.image.load("assets/bg4.png").convert_alpha()
+resize_bg4 = pygame.transform.scale(bg_image4, (800,500))
+bg_copy4 = pygame.image.load("assets/bg4.png").convert_alpha()
+resize_copy4 = pygame.transform.scale(bg_copy4, (800,500))
+
+# Backround Trees
+bg_image5 = pygame.image.load("assets/bg5.png").convert_alpha()
+resize_bg5 = pygame.transform.scale(bg_image5, (800,500))
+bg_copy5 = pygame.image.load("assets/bg5.png").convert_alpha()
+resize_copy5 = pygame.transform.scale(bg_copy5, (800,500))
+
+# Foreground Trees
+bg_image6 = pygame.image.load("assets/bg6.png").convert_alpha()
+resize_bg6 = pygame.transform.scale(bg_image6, (800,500))
+bg_copy6 = pygame.image.load("assets/bg6.png").convert_alpha()
+resize_copy6 = pygame.transform.scale(bg_copy6, (800,500))
+
+# Main Menu
+menu = pygame.image.load("assets/menu.png").convert_alpha()
+menu_resize = pygame.transform.scale(menu, (800,500))
+
+char_sprites = pygame.image.load("assets/characters.png").convert()
+
+
+# -------- Main Program Loop -----------
+while not done:
+    # --- Main event loop
+    for event in pygame.event.get(): # User did something
+        if event.type == pygame.QUIT: # If user clicked close
+            done = True # Flag that we are done so we exit this loop
+
+    # --- Game logic should go here
+
+    clouds -= 2
+    if clouds < - 800:
+        clouds = +800
+    clouds_copy -= 2
+    if clouds_copy < - 800:
+        clouds_copy = +800
+
+
+    big_mount -= 0
+    if big_mount < - 800:
+        big_mount = +800
+    big_mount_copy -= 1
+    if big_mount_copy < - 800:
+        big_mount_copy = +800
+
+
+    lil_mount -= 3
+    if lil_mount < - 800:
+        lil_mount = +800
+    lil_mount_copy -= 3
+    if lil_mount_copy < - 800:
+        lil_mount_copy = +800
+
+
+    bg_trees -= 4
+    if bg_trees < - 800:
+        bg_trees = +800
+    bg_trees_copy -= 4
+    if bg_trees_copy < - 800:
+        bg_trees_copy = +800
+
+    fg_trees -= 7
+    if fg_trees < - 800:
+        fg_trees = +800
+    fg_trees_copy -= 7
+    if fg_trees_copy < - 800:
+        fg_trees_copy = +800
+
+    # i.e calculations for positions, variable updates
+
+
+
+
+    # First, clear the screen to white. Don't put other drawing commands
+    # above this, or they will be erased with this command.
+
+    screen.blit (resize_bg0, [0,0])
+    screen.blit (resize_bg1, [0,0])
+    screen.blit (resize_bg2, [clouds,0]), screen.blit (resize_copy2, [clouds_copy,0])
+    screen.blit (resize_bg3, [big_mount_copy,0])
+    screen.blit (resize_bg4, [lil_mount,0]), screen.blit (resize_copy4, [lil_mount_copy,0])
+    screen.blit (resize_bg5, [bg_trees,0]), screen.blit (resize_bg5, [bg_trees_copy,0])
+    screen.blit (resize_bg6, [fg_trees,0]), screen.blit (resize_bg6, [fg_trees_copy,0])
+
+    screen.blit (title_resize, [160,200])
+    screen.blit (anykey_resize, [215,250])
+
+    if event.type == pygame.KEYDOWN:
+        screen.blit (menu_resize, [-8,-6])
+
+
+
+
+
+
+
+    # --- Drawing code should go here
+
+    # --- Go ahead and update the screen with what we've drawn.
+    pygame.display.flip()
+
+    # --- Limit to 60 frames per second
+    clock.tick(60)
+
+# Close the window and quit.
+# If you forget this line, the program will 'hang'
+# on exit if running from IDLE.
+pygame.quit()
